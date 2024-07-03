@@ -5,12 +5,17 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { DeleteResult, Repository } from 'typeorm';
 import { Project } from './entities/project.entity';
 import { throwError } from 'rxjs';
+import { CreateUserDto } from 'src/user/dto/create-user.dto';
+import { User } from 'src/user/entities/user.entity';
 
 @Injectable()
 export class ProjectService {
   constructor(
     @InjectRepository(Project)
-    private project_repository: Repository<Project>
+    private project_repository: Repository<Project>,
+
+    @InjectRepository(User)
+    private user_repository: Repository<User>,
   ){}
 
   async create(createProjectDto: CreateProjectDto): Promise<Project> {
@@ -46,5 +51,34 @@ export class ProjectService {
 
   async remove(id: number): Promise<DeleteResult> {
     return await this.project_repository.delete({id});
+  }
+
+  async add_users(id: number, createUserDtos: CreateUserDto[]){
+    const project_data = await this.project_repository.findOne({
+      where:{
+        id
+      },
+      relations:{
+        users: true
+      }
+      });
+
+    if (!project_data) {
+      throw new Error('Project not found');
+    }
+    
+    project_data.users = [...project_data.users];
+
+    for(let user of createUserDtos){
+      var user_data = await this.user_repository.findOneBy({
+        login: user.login
+      });
+      
+      if(user_data){
+        project_data.users.push(user_data);
+      }
+    }
+    console.log('project data before save', project_data);
+    this.project_repository.save(project_data);
   }
 }

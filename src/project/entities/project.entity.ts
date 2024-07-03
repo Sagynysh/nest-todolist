@@ -11,8 +11,9 @@ export class Project {
     @Column()
     project_name : string;
 
-    @ManyToMany(() => User)
-    @JoinTable()
+    @ManyToMany(() => User, user => user.project, {
+        cascade: true
+    })
     users : User[];
 
     @OneToMany(() => Task, (task) => task.project,{

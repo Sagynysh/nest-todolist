@@ -15,6 +15,16 @@ export class User {
     login : string;
 
     @ManyToMany(() => Project, (project) => project.users)
-    @JoinTable()
+    @JoinTable({
+        name: 'project_user',
+        joinColumn: {
+            name: 'project_id',
+            referencedColumnName: 'id'
+        },
+        inverseJoinColumn: {
+            name: 'user_id',
+            referencedColumnName: 'id'
+        }
+    })
     project: Project[];
 }

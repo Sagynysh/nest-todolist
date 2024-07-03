@@ -5,42 +5,42 @@ import { UpdateTaskDto } from './dto/update-task.dto';
 
 @Controller('task')
 export class TaskController {
-  constructor(private readonly taskService: TaskService) {}
+  constructor(private readonly task_service: TaskService) {}
 
   @Post()
   create(@Body() createTaskDto: CreateTaskDto) {
-    return this.taskService.create(createTaskDto);
+    return this.task_service.create(createTaskDto);
   }
 
   @Get('active')
   async active(){
     console.log('active');
-    return this.taskService.active();
+    return this.task_service.active();
   }
-  
+
   @Get()
   findAll() {
-    return this.taskService.findAll();
+    return this.task_service.findAll();
   }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
     console.log('get by one');
-    return this.taskService.findOne(+id);
+    return this.task_service.findOne(+id);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateTaskDto: UpdateTaskDto) {
-    return this.taskService.update(+id, updateTaskDto);
+    return this.task_service.update(+id, updateTaskDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.taskService.remove(+id);
+    return this.task_service.remove(+id);
   }
 
   @Get('complete/:id')
   async complete(@Param('id') id: string){
-    return this.taskService.complete(+id);
+    return this.task_service.complete(+id);
   }
 }

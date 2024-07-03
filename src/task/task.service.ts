@@ -10,25 +10,25 @@ import { Project } from 'src/project/entities/project.entity';
 export class TaskService {
   constructor(
     @InjectRepository(Task)
-    private readonly taskRepository: Repository<Task>,
+    private readonly task_repository: Repository<Task>,
     @InjectRepository(Project)
-    private readonly projectRepository: Repository<Project>,
+    private readonly project_repository: Repository<Project>,
   ){}
 
   async create(createTaskDto: CreateTaskDto): Promise<Task> {
-    const projectData = await this.projectRepository.findOneBy({id: createTaskDto.project_id});
+    const projectData = await this.project_repository.findOneBy({id: createTaskDto.project_id});
     const task_data = new Task();
     task_data.purpose = createTaskDto.purpose;
     task_data.project = projectData;
-    return await this.taskRepository.save(task_data);
+    return await this.task_repository.save(task_data);
   }
 
   async findAll(): Promise<Task[]> {
-    return await this.taskRepository.find();
+    return await this.task_repository.find();
   }
 
   async findOne(id: number): Promise<Task> {
-    const task_data = await this.taskRepository.findOneBy({id});
+    const task_data = await this.task_repository.findOneBy({id});
     if(!task_data){
       throw new HttpException(
         'Task Not Found',
@@ -47,11 +47,11 @@ export class TaskService {
   }
 
   async complete(id: number): Promise<void>{
-    await this.taskRepository.update(id, {completed: true});
+    await this.task_repository.update(id, {completed: true});
   }
 
   async active(): Promise<Task[]>{
-    const tasks = await this.taskRepository.find({
+    const tasks = await this.task_repository.find({
       where: {
         completed: true
       }
