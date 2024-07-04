@@ -5,6 +5,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './entities/user.entity';
 import { Project } from 'src/project/entities/project.entity';
+import { UserNotFoundException } from 'src/exception/exceptions';
 
 @Injectable()
 export class UserService {
@@ -29,23 +30,26 @@ export class UserService {
   async findOne(id: number): Promise<User>{
     const user_data = await this.user_repository.findOneBy({id});
     if(!user_data){
-      throw new HttpException(
-        'User Not Found',
-        404,
-      );
+      throw new UserNotFoundException();
     }
     return user_data;
   }
 
   async update(id: number, updateUserDto: UpdateUserDto) : Promise<User> {
-    const existingUser = await this.user_repository.findOneBy({id});
-    const user_data = await this.user_repository.merge(existingUser, updateUserDto);
+    const existing_user = await this.user_repository.findOneBy({id});
+    if(!existing_user){
+      throw new UserNotFoundException();
+    }
+    const user_data = await this.user_repository.merge(existing_user, updateUserDto);
     return await this.user_repository.save(user_data);
   }
 
   async remove(id: number): Promise<User>{
-    const existingUser = await this.user_repository.findOneBy({id});
-    return await this.user_repository.remove(existingUser);
+    const existing_user = await this.user_repository.findOneBy({id});
+    if(!existing_user){
+      throw new UserNotFoundException();
+    }
+    return await this.user_repository.remove(existing_user);
   }
 
   async projects(id: number): Promise<Project[]>{
@@ -57,6 +61,10 @@ export class UserService {
         project: true
       }
     });
+
+    if(!user_data){
+      throw new UserNotFoundException();
+    }
 
     return user_data.project;
   }

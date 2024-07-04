@@ -1,3 +1,4 @@
+import { ApiProperty } from "@nestjs/swagger";
 import { Task } from "src/task/entities/task.entity";
 import { User } from "src/user/entities/user.entity";
 import { Column, Entity, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn } from "typeorm";
@@ -5,19 +6,23 @@ import { Column, Entity, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColum
 @Entity()
 export class Project {
 
+    @ApiProperty()
     @PrimaryGeneratedColumn()
     id : number;
 
+    @ApiProperty()
     @Column()
     project_name : string;
 
+    @ApiProperty({isArray: true})
     @ManyToMany(() => User, user => user.project, {
-        cascade: true
+        cascade: ['insert']
     })
     users : User[];
 
+    @ApiProperty({isArray: true})
     @OneToMany(() => Task, (task) => task.project,{
-        cascade: true
+        cascade: ['insert', 'remove']
     })
     tasks : Task[];
 }

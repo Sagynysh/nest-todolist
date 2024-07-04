@@ -14,7 +14,6 @@ export class TaskController {
 
   @Get('active')
   async active(){
-    console.log('active');
     return this.task_service.active();
   }
 

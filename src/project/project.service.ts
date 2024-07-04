@@ -7,6 +7,7 @@ import { Project } from './entities/project.entity';
 import { throwError } from 'rxjs';
 import { CreateUserDto } from 'src/user/dto/create-user.dto';
 import { User } from 'src/user/entities/user.entity';
+import { ProjectNotFoundException } from 'src/exception/exceptions';
 
 @Injectable()
 export class ProjectService {
@@ -22,7 +23,7 @@ export class ProjectService {
     return await this.project_repository.save(createProjectDto); 
   }
 
-  async findAll() {
+  async findAll(): Promise<Project[]> {
     return await this.project_repository.find();
   }
 
@@ -37,10 +38,7 @@ export class ProjectService {
     });
 
     if(!project_data){
-      throw new HttpException(
-        'Project Not Found',
-        404,
-      )
+      throw new ProjectNotFoundException();
     }
     return project_data;
   }
@@ -64,7 +62,7 @@ export class ProjectService {
       });
 
     if (!project_data) {
-      throw new Error('Project not found');
+      throw new ProjectNotFoundException();
     }
     
     project_data.users = [...project_data.users];
@@ -78,7 +76,6 @@ export class ProjectService {
         project_data.users.push(user_data);
       }
     }
-    console.log('project data before save', project_data);
-    this.project_repository.save(project_data);
+    return this.project_repository.save(project_data);
   }
 }
