@@ -1,0 +1,465 @@
+{
+	"info": {
+		"_postman_id": "cdcd2185-e237-47ba-b75b-b72e49937f23",
+		"name": "todolist",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "21567289"
+	},
+	"item": [
+		{
+			"name": "user",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "\"auth\"",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\":\"gabriel\",\n    \"login\":\"gaby\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/user",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "\"auth\"",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\":\"remove\",\n    \"login\":\"remove\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/user/5",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"user",
+						"5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "remove",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "\"auth\"",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\":\"remove\",\n    \"login\":\"remove\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/user/5",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"user",
+						"5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "users",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "\"auth\"",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\":\"anson\",\n    \"login\":\"anson\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/user",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "user-projects",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "\"auth\"",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\":\"anson\",\n    \"login\":\"anson\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/user/1/projects",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"user",
+						"1",
+						"projects"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "project",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "\"auth\"",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"project_name\":\"but from market\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/project",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"project"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "project-add-users",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "\"auth\"",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\n    {\n        \"id\": 1,\n        \"name\": \"anson\",\n        \"login\": \"anson\"\n    },\n    {\n        \"id\": 3,\n        \"name\": \"gabriel\",\n        \"login\": \"gaby\"\n    }\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/project/1/add-users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"project",
+						"1",
+						"add-users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get projects",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "\"auth\"",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\":\"anson\",\n    \"login\":\"anson\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/project",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"project"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "project Copy 2",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "\"auth\"",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\":\"anson\",\n    \"login\":\"anson\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/project/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"project",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "task",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"purpose\":\"make laundry\",\n    \"project_id\":1\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/task",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"task"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "task Copy",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\":\"anson\",\n    \"login\":\"anson\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/task",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"task"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "active",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "authorization",
+						"value": "t",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/task/active",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"task",
+						"active"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "complete_task",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\":\"anson\",\n    \"login\":\"anson\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/task/complete/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"task",
+						"complete",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
