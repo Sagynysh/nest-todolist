@@ -1,4 +1,4 @@
-import { HttpException, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -27,6 +27,14 @@ export class UserService {
     return this.user_repository.find();
   }
 
+  async findByLogin(login: string): Promise<User>{
+    const user_data = await this.user_repository.findOneBy({login});
+    if(!user_data){
+      throw new UserNotFoundException();
+    }
+    return user_data;
+  }
+
   async findOne(id: number): Promise<User>{
     const user_data = await this.user_repository.findOneBy({id});
     if(!user_data){
@@ -40,7 +48,7 @@ export class UserService {
     if(!existing_user){
       throw new UserNotFoundException();
     }
-    const user_data = await this.user_repository.merge(existing_user, updateUserDto);
+    const user_data = this.user_repository.merge(existing_user, updateUserDto);
     return await this.user_repository.save(user_data);
   }
 
@@ -58,7 +66,7 @@ export class UserService {
         id: id
       },
       relations: {
-        project: true
+        projects: true
       }
     });
 
@@ -66,6 +74,6 @@ export class UserService {
       throw new UserNotFoundException();
     }
 
-    return user_data.project;
+    return user_data.projects;
   }
 }

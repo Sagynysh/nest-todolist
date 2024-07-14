@@ -23,13 +23,13 @@ export class User {
     @JoinTable({
         name: 'project_user',
         joinColumn: {
-            name: 'project_id',
+            name: 'user_id',
             referencedColumnName: 'id'
         },
         inverseJoinColumn: {
-            name: 'user_id',
+            name: 'project_id',
             referencedColumnName: 'id'
         }
     })
-    project: Project[];
+    projects: Project[];
 }

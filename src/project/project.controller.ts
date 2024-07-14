@@ -1,22 +1,13 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Headers } from '@nestjs/common';
 import { ProjectService } from './project.service';
 import { CreateProjectDto } from './dto/create-project.dto';
 import { UpdateProjectDto } from './dto/update-project.dto';
-import { CreateUserDto } from 'src/user/dto/create-user.dto';
 import { ApiCreatedResponse } from '@nestjs/swagger';
 import { Project } from './entities/project.entity';
 
 @Controller('project')
 export class ProjectController {
   constructor(private readonly project_service: ProjectService) {}
-
-  @ApiCreatedResponse({
-    description: 'User added to Project Succesfully',
-  })
-  @Post(':id/add-users')
-  add_users(@Param('id') id: string, @Body() createUserDtos: CreateUserDto[]) {
-    return this.project_service.add_users(+id, createUserDtos);
-  }
 
   @ApiCreatedResponse({
     description: 'Created Succesfully',
@@ -33,8 +24,10 @@ export class ProjectController {
     isArray: true
   })
   @Get()
-  findAll() {
-    return this.project_service.findAll();
+  findAll(@Headers() headers: string) {
+    console.log(headers['authorization']);
+    const login = headers['authorization'];
+    return this.project_service.findAll(login);
   }
 
   @ApiCreatedResponse({
@@ -43,8 +36,9 @@ export class ProjectController {
     isArray: false
   })
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.project_service.findOne(+id);
+  findOne(@Headers() headers: string, @Param('id') id: string) {
+    const login = headers['authorization'];
+    return this.project_service.findOne(login, +id);
   }
 
   @Patch(':id')

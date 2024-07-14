@@ -1,7 +1,7 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { Task } from "src/task/entities/task.entity";
 import { User } from "src/user/entities/user.entity";
-import { Column, Entity, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToMany, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class Project {
@@ -15,7 +15,7 @@ export class Project {
     project_name : string;
 
     @ApiProperty({isArray: true})
-    @ManyToMany(() => User, user => user.project, {
+    @ManyToMany(() => User, user => user.projects, {
         cascade: ['insert']
     })
     users : User[];
