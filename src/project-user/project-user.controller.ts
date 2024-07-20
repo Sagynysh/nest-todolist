@@ -14,7 +14,7 @@ export class ProjectUserController {
         description: 'User added to Project Succesfully',
     })
     @Post()
-    add_users(@Headers() headers: string, @Param('id') id: string, @Body() createUserDtos: CreateUserDto[]) {
+    add_users(@Headers() headers: string, @Param('project_id') id: string, @Body() createUserDtos: CreateUserDto[]) {
         const login = headers['authorization'];
         return this.project_service.add_users(login, +id, createUserDtos);
     }

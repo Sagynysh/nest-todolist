@@ -9,6 +9,7 @@ import { User } from 'src/user/entities/user.entity';
 import { ProjectNotFoundException, UserNotFoundException } from 'src/exception/exceptions';
 import { Task } from 'src/task/entities/task.entity';
 import { CreateProjectTaskDto } from 'src/task/dto/create-project-task.dto';
+import { log } from 'console';
 
 @Injectable()
 export class ProjectService {
@@ -42,23 +43,20 @@ export class ProjectService {
   }
 
   async findOne(login: string, id: number): Promise<Project> {
-    const user_data =  await this.user_repository.findOne({
+    const project_data =  await this.project_repository.findOne({
       where: {
-        login: login,
-        projects: {
-          id: id
+        id: id,
+        users:{
+          login: login
         }
-      },
-      relations: {
-        projects: true
       }
     })
 
-    if(!user_data){
-      throw new UserNotFoundException();
+    if(!project_data){
+      throw new ProjectNotFoundException();
     }
 
-    return user_data.projects[0];
+    return project_data;
   }
 
   update(id: number, updateProjectDto: UpdateProjectDto) {

@@ -4,10 +4,21 @@ import { CreateProjectDto } from './dto/create-project.dto';
 import { UpdateProjectDto } from './dto/update-project.dto';
 import { ApiCreatedResponse } from '@nestjs/swagger';
 import { Project } from './entities/project.entity';
+import { CreateProjectTaskDto } from 'src/task/dto/create-project-task.dto';
 
 @Controller('project')
 export class ProjectController {
   constructor(private readonly project_service: ProjectService) {}
+
+
+  @ApiCreatedResponse({
+      description: 'Project and task was created successfully',
+  })
+  @Post('/create-with-task')
+  create_project_and_task(@Headers() headers: string, @Body() createTaskDto: CreateProjectTaskDto) {
+      const login = headers['authorization'];
+      return this.project_service.create_project_and_task(login, createTaskDto);
+  }
 
   @ApiCreatedResponse({
     description: 'Created Succesfully',
