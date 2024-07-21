@@ -5,6 +5,7 @@ import { UpdateProjectDto } from './dto/update-project.dto';
 import { ApiCreatedResponse } from '@nestjs/swagger';
 import { Project } from './entities/project.entity';
 import { CreateProjectTaskDto } from 'src/task/dto/create-project-task.dto';
+import { Authlogin } from 'src/decorator/authlogin/authlogin.decorator';
 
 @Controller('project')
 export class ProjectController {
@@ -15,8 +16,7 @@ export class ProjectController {
       description: 'Project and task was created successfully',
   })
   @Post('/create-with-task')
-  create_project_and_task(@Headers() headers: string, @Body() createTaskDto: CreateProjectTaskDto) {
-      const login = headers['authorization'];
+  create_project_and_task(@Authlogin() login: string, @Body() createTaskDto: CreateProjectTaskDto) {
       return this.project_service.create_project_and_task(login, createTaskDto);
   }
 
@@ -35,9 +35,7 @@ export class ProjectController {
     isArray: true
   })
   @Get()
-  findAll(@Headers() headers: string) {
-    console.log(headers['authorization']);
-    const login = headers['authorization'];
+  findAll(@Authlogin() login: string) {
     return this.project_service.findAll(login);
   }
 
@@ -47,8 +45,7 @@ export class ProjectController {
     isArray: false
   })
   @Get(':id')
-  findOne(@Headers() headers: string, @Param('id') id: string) {
-    const login = headers['authorization'];
+  findOne(@Authlogin() login: string, @Param('id') id: string) {
     return this.project_service.findOne(login, +id);
   }
 
